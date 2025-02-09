@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  title: Price Detail API
+  description: API สำหรับดึงข้อมูลราคา
+  contact:
+    name: Support Team
+    url: https://www.example.com/support
+    email: support@example.com
+  version: 1.0.0
+servers:
+- url: https://icon.homeip.net/customerportal_remapi
+  description: Production Server
+security:
+- apiKey: []
+paths:
+  /myunit/pricedetail:
+    post:
+      summary: ดึงข้อมูลราคา
+      description: ดึงข้อมูลราคาของหน่วยที่กำหนด
+      operationId: getPriceDetail
+      parameters:
+      - name: Accept
+        in: header
+        description: ประเภทของข้อมูลที่สามารถยอมรับได้ (application/json)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      - name: Content-Type
+        in: header
+        description: ประเภทของข้อมูลที่ส่งไป (application/json)
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+        example: application/json
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/myunit_pricedetail_body'
+        required: true
+      responses:
+        "200":
+          description: ข้อมูลราคาถูกดึงมาแล้ว
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+        "400":
+          description: ข้อมูลไม่ถูกต้อง
+        "500":
+          description: ข้อผิดพลาดภายในเซิร์ฟเวอร์
+components:
+  schemas:
+    myunit_pricedetail_body:
+      required:
+      - priceType
+      - quantity
+      - unitId
+      type: object
+      properties:
+        unitId:
+          type: string
+          description: ID ของหน่วย
+        priceType:
+          type: string
+          description: ประเภทของราคา
+        quantity:
+          type: integer
+          description: จำนวนที่ต้องการ
+    inline_response_200:
+      type: object
+      properties:
+        price:
+          type: number
+          description: ราคา
+          format: float
+        currency:
+          type: string
+          description: สกุลเงินที่ใช้
+        message:
+          type: string
+          description: ข้อความสถานะ
+  securitySchemes:
+    apiKey:
+      type: apiKey
+      name: Authorization
+      in: header
