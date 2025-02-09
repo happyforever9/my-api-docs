@@ -11,7 +11,7 @@
     <script>
         window.onload = function() {
             const ui = SwaggerUIBundle({
-                url: 'https://happyforever9.github.io/my-api-docs/openapi(1).yaml',
+                url: 'https://happyforever9.github.io/my-api-docs/openapi.yaml',
                 dom_id: '#swagger-ui'
             });
         };
