@@ -9,12 +9,18 @@
     <div id="swagger-ui"></div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js"></script>
     <script>
-        window.onload = function() {
-            const ui = SwaggerUIBundle({
-                url: 'https://raw.githubusercontent.com/happyforever9/my-api-docs/main/openapi.yaml',
-                dom_id: '#swagger-ui'
-            });
-        };
+window.onload = function() {
+    fetch('https://raw.githubusercontent.com/happyforever9/my-api-docs/main/openapi.yaml')
+    .then(response => response.text()) // โหลด YAML เป็นข้อความ
+    .then(yamlText => {
+        const ui = SwaggerUIBundle({
+            spec: jsyaml.load(yamlText), // แปลง YAML เป็น JSON
+            dom_id: '#swagger-ui'
+        });
+    })
+    .catch(error => console.error('Error loading YAML:', error));
+};
+
     </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
 
