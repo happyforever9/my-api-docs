@@ -10,7 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/swagger-ui/4.15.5/swagger-ui-bundle.js"></script>
     <script>
 window.onload = function() {
-    fetch('https://raw.githubusercontent.com/happyforever9/my-api-docs/main/openapi.yaml')
+    fetch('https://raw.githubusercontent.com/happyforever9/my-api-docs/refs/heads/main/openapi%20(1).json')
     .then(response => response.text()) // โหลด YAML เป็นข้อความ
     .then(yamlText => {
         const ui = SwaggerUIBundle({
