@@ -1,0 +1,126 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Price Detail API",
+    "description": "API สำหรับดึงข้อมูลราคา",
+    "version": "1.0.0",
+    "contact": {
+      "name": "Support Team",
+      "email": "support@example.com",
+      "url": "https://www.example.com/support"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://icon.homeip.net/customerportal_remapi",
+      "description": "Production Server"
+    }
+  ],
+  "paths": {
+    "/myunit/pricedetail": {
+      "post": {
+        "summary": "ดึงข้อมูลราคา",
+        "description": "ดึงข้อมูลราคาของหน่วยที่กำหนด",
+        "operationId": "getPriceDetail",
+        "parameters": [
+          {
+            "in": "header",
+            "name": "Accept",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ประเภทของข้อมูลที่สามารถยอมรับได้ (application/json)",
+            "example": "application/json"
+          },
+          {
+            "in": "header",
+            "name": "Content-Type",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "ประเภทของข้อมูลที่ส่งไป (application/json)",
+            "example": "application/json"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "unitId": {
+                    "type": "string",
+                    "description": "ID ของหน่วย"
+                  },
+                  "priceType": {
+                    "type": "string",
+                    "description": "ประเภทของราคา"
+                  },
+                  "quantity": {
+                    "type": "integer",
+                    "description": "จำนวนที่ต้องการ"
+                  }
+                },
+                "required": [
+                  "unitId",
+                  "priceType",
+                  "quantity"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "ข้อมูลราคาถูกดึงมาแล้ว",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "price": {
+                      "type": "number",
+                      "format": "float",
+                      "description": "ราคา"
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "สกุลเงินที่ใช้"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "ข้อความสถานะ"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "ข้อมูลไม่ถูกต้อง"
+          },
+          "500": {
+            "description": "ข้อผิดพลาดภายในเซิร์ฟเวอร์"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "apiKey": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "Authorization"
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKey": []
+    }
+  ]
+}
